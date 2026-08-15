@@ -15,7 +15,7 @@ def call(Map config){
     sh """
         docker tag \
         ${config.image}:${config.tag} \
-        ${config.registry}/${config.repository}:{config.tag}
+        ${config.registry}/${config.repository}:${config.tag}
        """
 
 }
