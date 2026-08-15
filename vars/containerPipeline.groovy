@@ -24,7 +24,7 @@ def call(Map config) {
     trivyScan(image:config.image ,tag: config.tag)
 
     dockerTag(image:config.image ,tag: config.tag,
-               registry:config.registry,repository:config.repository)
+               registry:config.registry, repository:config.repository)
 
     dockerPush(tag: config.tag,registry:config.registry,repository:config.repository)
 

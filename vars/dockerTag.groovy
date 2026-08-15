@@ -5,7 +5,7 @@ def call(Map config){
     if(!config.tag?.trim()){
         error "dockerTag(): Tag parameter is required"
     }
-    if(!config.registy?.trim()){
+    if(!config.registry?.trim()){
         error "dockerTag(): Registry parameter is required"
     }
     if(!config.repository?.trim()){
