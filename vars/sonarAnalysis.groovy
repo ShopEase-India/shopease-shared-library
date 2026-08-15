@@ -11,7 +11,7 @@ def call(Map config){
             sonar:sonar \
             -Dsonar.projectKey=shopease-${config.service} \
             -Dsonar.projectName=shopease-${config.service} \
-            -Dsonar.coverage.jacoco.xmlReportPaths=backend/${config.service}/target/site/jacoco/jacoco.xml
+            /*-Dsonar.coverage.jacoco.xmlReportPaths=backend/${config.service}/target/site/jacoco/jacoco.xml*/
            """
     }
 }
