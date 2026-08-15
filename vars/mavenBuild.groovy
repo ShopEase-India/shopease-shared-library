@@ -7,7 +7,7 @@ def call(Map config) {
     if (!config.goal?.trim()) {
         error "mavenBuild(): 'goal' parameter is required."
     }
-    
+
 
     def options = config.options ?: ""
 
