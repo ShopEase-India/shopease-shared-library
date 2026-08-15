@@ -1,7 +1,7 @@
 def call(String serviceName){
-    sh '''
+    sh """
         mvn \
-        -pl backend/${SERVICE_NAME} \
+        -pl backend/${serviceName} \
         -am test
-       '''
+       """
 }

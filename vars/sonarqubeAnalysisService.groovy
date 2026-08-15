@@ -1,12 +1,12 @@
 def call(String serviceName){
     withSonarQubeEnv('shopease-sonarqube') {
-        sh '''
+        sh """
             mvn \
-            -pl backend/${SERVICE_NAME} \
+            -pl backend/${serviceName} \
             -am verify \
             sonar:sonar \
-            -Dsonar.projectKey=shopease-${SERVICE_NAME} \
-            -Dsonar.projectName=shopease-${SERVICE_NAME}
-           '''
+            -Dsonar.projectKey=shopease-${serviceName} \
+            -Dsonar.projectName=shopease-${serviceName}
+           """
     }
 }
