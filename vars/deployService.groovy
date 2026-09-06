@@ -1,20 +1,43 @@
 def call(Map config) {
 
-    sh """
-        aws eks update-kubeconfig \
-            --name ${config.clusterName} \
-            --region ${config.region}
+    try {
+        sh """
+            set -e
 
-        sed -i "s|image: .*|image: ${config.image}:${config.tag}|" \
-            shopease-kubernetes/${config.serviceName}/deployment.yaml
+            echo "Deploying ${config.serviceName}:${config.tag}"
 
-        kubectl apply \
-            -f shopease-kubernetes/${config.serviceName}/deployment.yaml \
-            -n ${config.namespace}
+            aws eks update-kubeconfig \
+                --name ${config.clusterName} \
+                --region ${config.region}
 
-        kubectl rollout status \
-            deployment/${config.serviceName} \
-            -n ${config.namespace} \
-            --timeout=5m
-    """
+            sed -i "s|image: .*|image: ${config.image}:${config.tag}|" \
+                shopease-kubernetes/${config.serviceName}/deployment.yaml
+
+            kubectl apply \
+                -f shopease-kubernetes/${config.serviceName}/deployment.yaml \
+                -n ${config.namespace}
+
+            kubectl rollout status \
+                deployment/${config.serviceName} \
+                -n ${config.namespace} \
+                --timeout=5m
+        """
+
+        healthCheck(
+                serviceName: config.serviceName,
+                namespace: config.namespace
+        )
+
+    } catch (Exception e) {
+
+        echo "Deployment or health check failed."
+        echo "Rolling back ${config.serviceName}..."
+
+        rolloutUndo(
+                serviceName: config.serviceName,
+                namespace: config.namespace
+        )
+
+        throw e
+    }
 }
