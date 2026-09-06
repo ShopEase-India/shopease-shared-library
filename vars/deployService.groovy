@@ -5,7 +5,7 @@ def call(Map config) {
             --name ${config.clusterName} \
             --region ${config.region}
 
-        sed -i "s|image: .*|image: ${config.image}:${config.imageTag}|" \
+        sed -i "s|image: .*|image: ${config.image}:${config.tag}|" \
             shopease-kubernetes/${config.serviceName}/deployment.yaml
 
         kubectl apply \
