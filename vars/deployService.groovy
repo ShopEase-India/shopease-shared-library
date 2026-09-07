@@ -1,20 +1,22 @@
 def call(Map config) {
 
+
     try {
+
         sh """
             set -e
-
-            echo "Deploying ${config.serviceName}:${config.tag}"
 
             aws eks update-kubeconfig \
                 --name ${config.clusterName} \
                 --region ${config.region}
+            
+            kubectl apply \\
+            -k shopease-kubernetes/${config.serviceName}/ \\
+            -n ${config.namespace}
 
-            sed -i "s|image: .*|image: ${config.image}:${config.tag}|" \
-                shopease-kubernetes/${config.serviceName}/deployment.yaml
-
-            kubectl apply \
-                -f shopease-kubernetes/${config.serviceName}/deployment.yaml \
+            kubectl set image \
+                deployment/${config.serviceName} \
+                ${config.serviceName}=${config.image}:${config.tag} \
                 -n ${config.namespace}
 
             kubectl rollout status \
