@@ -1,6 +1,6 @@
 def call(Map config) {
     sh """
-        REVISION_COUNT= \$(kubectl rollout history deployment/${config.serviceName} \
+        REVISION_COUNT=\$(kubectl rollout history deployment/${config.serviceName} \
             -n ${config.namespace} | awk 'NR > 2 {count++} END {print count}')
 
         if [ "\$REVISION_COUNT" -ge 2 ]; then
@@ -17,6 +17,5 @@ def call(Map config) {
         else
             echo "No previous rollout available. Skipping rollback."
         fi
-        
     """
 }
