@@ -20,7 +20,7 @@ def call(Map config) {
         echo "Helm repository updated successfully."
         echo "Argo CD will deploy ${config.serviceName}:${config.tag}"
 
-        healthCheck(
+        argocdDeploy(
                 serviceName: config.serviceName,
                 namespace: config.namespace
         )
