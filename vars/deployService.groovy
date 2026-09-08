@@ -9,15 +9,6 @@ def call(Map config) {
             aws eks update-kubeconfig \
                 --name ${config.clusterName} \
                 --region ${config.region}
-            
-           /* kubectl apply \
-            -k shopease-kubernetes/${config.serviceName}/ \
-            -n ${config.namespace}
-
-            kubectl set image \
-                deployment/${config.serviceName} \
-                ${config.serviceName}=${config.image}:${config.tag} \
-                -n ${config.namespace}*/
 
             helm upgrade --install ${config.serviceName} \
                 ./shopease-helm/${config.serviceName} \
