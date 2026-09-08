@@ -10,7 +10,7 @@ def call(Map config) {
                 --name ${config.clusterName} \
                 --region ${config.region}
             
-            /*kubectl apply \\
+           /* kubectl apply \
             -k shopease-kubernetes/${config.serviceName}/ \
             -n ${config.namespace}
 
